@@ -30,8 +30,8 @@ from ray.rllib.core.rl_module.rl_module import RLModuleSpec
 from ray.rllib.algorithms.ppo.ppo_catalog import PPOCatalog
 
 import supersuit as ss
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
-from vendor.PettingZoo.pettingzoo.utils.wrappers import BaseParallelWrapper
+from pettingzoo.sisl import pursuit_v4
+from pettingzoo.utils.wrappers import BaseParallelWrapper
 from ray.rllib.env.wrappers.pettingzoo_env import ParallelPettingZooEnv
 
 # Import the training module so custom RLlib classes are available under the

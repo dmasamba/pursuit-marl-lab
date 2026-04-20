@@ -57,7 +57,7 @@ import ray
 from ray.rllib.algorithms.ppo import PPO
 from ray.rllib.env.wrappers.pettingzoo_env import PettingZooEnv
 
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
+from pettingzoo.sisl import pursuit_v4
 import supersuit as ss
 
 

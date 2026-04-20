@@ -38,8 +38,8 @@ from ray.rllib.algorithms.ppo.torch.default_ppo_torch_rl_module import (
 )
 
 import supersuit as ss
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
-from vendor.PettingZoo.pettingzoo.utils.wrappers import BaseParallelWrapper
+from pettingzoo.sisl import pursuit_v4
+from pettingzoo.utils.wrappers import BaseParallelWrapper
 from ray.rllib.env.wrappers.pettingzoo_env import ParallelPettingZooEnv
 
 from pursuit_marl_lab.eval_obs_image_utils import get_restored_module_ids, sort_agent_ids

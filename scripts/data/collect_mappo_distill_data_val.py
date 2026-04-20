@@ -27,7 +27,7 @@ except Exception:
     pass
 
 try:
-    from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4 as pursuit_env
+    from pettingzoo.sisl import pursuit_v4 as pursuit_env
 except Exception as e:
     raise RuntimeError("Please install PettingZoo with SISL extras: pip install pettingzoo[sisl]") from e
 

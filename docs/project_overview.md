@@ -13,7 +13,6 @@ pipelines, and evaluation scripts for robustness and generalization tests.
 - `scripts/eval/mappo_obs_images/`: MAPPO image-observation evaluation scripts.
 - `scripts/data/`: distillation and dataset collection utilities.
 - `pursuit_marl_lab/`: shared utilities used across scripts.
-- `vendor/PettingZoo/`: vendored PettingZoo source used by the project.
 - `envs/pursuit_marl_lab.yml`: conda environment specification.
 
 ## Setup

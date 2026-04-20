@@ -36,7 +36,6 @@ checkpoint_*/
 **/wandb/
 **/artifacts/
 events.out.tfevents*
-vendor/PettingZoo/.git/
 
 # Model artifacts
 *.ckpt

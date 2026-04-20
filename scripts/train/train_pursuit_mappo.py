@@ -12,7 +12,7 @@ import ray
 from ray import tune
 from ray.tune import CLIReporter, CheckpointConfig
 
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
+from pettingzoo.sisl import pursuit_v4
 from ray.rllib.env.wrappers.pettingzoo_env import ParallelPettingZooEnv, PettingZooEnv
 from ray.rllib.algorithms.ppo import PPOConfig
 

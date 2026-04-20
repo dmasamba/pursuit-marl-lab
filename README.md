@@ -14,7 +14,6 @@ generalization evaluations, and data-collection utilities.
 - `pursuit_marl_lab/`: shared repository utilities
 - `docs/`: project notes and experiment documentation
 - `envs/`: environment specifications
-- `vendor/`: vendored third-party code
 - `legacy/`: older scripts kept for reference
 
 ## Setup
@@ -39,6 +38,5 @@ python -m scripts.eval.ippo_obs_images.eval_ippo_non_centered_ego_obs_images --h
 - New generated outputs should go under `artifacts/`.
 - Existing historical result directories are left in place for now and remain
   ignored by git.
-- `vendor/PettingZoo/` still contains its original nested `.git` metadata and
-  should be cleaned up before the first public push if you want it tracked as
-  plain vendored source.
+- PettingZoo is expected to be installed from the environment spec rather than
+  tracked as vendored source in this repository.

@@ -8,7 +8,7 @@ from ray import tune
 from ray.rllib.algorithms.ppo import PPO
 from ray.rllib.algorithms.ppo import PPOConfig
 
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
+from pettingzoo.sisl import pursuit_v4
 
 # try:
 #     from pettingzoo.sisl import pursuit_v4

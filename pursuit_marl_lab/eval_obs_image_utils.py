@@ -6,8 +6,8 @@ import numpy as np
 import supersuit as ss
 from typing import Dict, Iterable, List, Optional, Tuple
 
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
-from vendor.PettingZoo.pettingzoo.utils.wrappers import BaseParallelWrapper
+from pettingzoo.sisl import pursuit_v4
+from pettingzoo.utils.wrappers import BaseParallelWrapper
 from ray.rllib.env.wrappers.pettingzoo_env import ParallelPettingZooEnv
 
 from scripts.train import train_pursuit_mappo_obs_images as train_mod

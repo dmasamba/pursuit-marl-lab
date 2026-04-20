@@ -34,7 +34,7 @@ from ray.rllib.algorithms.ppo.torch.default_ppo_torch_rl_module import (
 )
 
 import supersuit as ss
-from vendor.PettingZoo.pettingzoo.sisl import pursuit_v4
+from pettingzoo.sisl import pursuit_v4
 from ray.rllib.env.wrappers.pettingzoo_env import ParallelPettingZooEnv
 
 from scripts.train.train_pursuit_mappo_obs_images import ObservationImageWrapper, build_conv_filters

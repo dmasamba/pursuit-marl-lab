@@ -1,0 +1,87 @@
+python train_pursuit_rllib.py --num-agents 4 --num-iters 500 --num-workers 2 --algo PPO --framework torch
+
+python train_pursuit_rllib.py --num-agents 4 --num-evaders 2 --num-workers 4 --train-batch-size-per-learner 4000 --minibatch-size 256 --num-epochs 10 --wandb
+
+WANDB_SILENT=true python train_pursuit_rllib.py --num-agents 4 --num-evaders 4 --num-workers 4 --train-batch-size-per-learner 4000 --num-iters 2000 --minibatch-size 512 --num-epochs 20 --framework torch --use-wandb
+
+WANDB_SILENT=true python train_pursuit_rllib.py --num-agents 4 --num-evaders 4 --num-workers 4 --train-batch-size-per-learner 4000 --num-iters 1000 --minibatch-size 256 --num-epochs 20 --framework torch --use-wandb
+
+WANDB_SILENT=true python train_pursuit_rllib.py --num-agents 4 --num-evaders 4 --num-workers 4 --train-batch-size-per-learner 4000 --num-iters 500 --minibatch-size 256 --num-epochs 10 --framework torch --use-wandb
+
+
+
+
+
+python train_pursuit_ippo.py --num-agents 4 --num-evaders 4 --num-workers 4 --train-batch-size-per-learner 1024 --minibatch-size 32
+
+python train_pursuit_ippo.py --num-agents 4 --num-evaders 4 --num-workers 8 --train-batch-size-per-learner 1024 --num-iters 500 --minibatch-size 32 --num-epochs 10
+
+
+python train_pursuit_ippo.py \
+  --num-agents 8 \
+  --num-evaders 16 \
+  --num-workers 4 \
+  --train-batch-size-per-learner 1024 \
+  --num-iters 1000000 \
+  --minibatch-size 64 \
+  --num-epochs 10 \
+  --framework torch
+
+  python train_ind_hrl.py \
+  --num-agents 4 \
+  --num-evaders 8 \
+  --num-workers 4 \
+  --train-batch-size-per-learner 512 \
+  --num-iters 10000 \
+  --minibatch-size 64 \
+  --num-epochs 10 \
+
+
+python collect_mappo_distill_data.py --checkpoint /home/danielmasamba/projects/pursuit/mappo_results/PPO_2025-09-02_22-27-57/PPO_pursuit_env_fc9d2_00000_0_2025-09-02_22-27-58/checkpoint_000079 --out_dir distill_data --episodes 500 --n-pursuers 2 --n-evaders 1 --x-size 8 --y-size 8 --max-cycles 100 --freeze-evaders --vector-envs 1
+
+python collect_mappo_distill_data_val.py \
+  --out_dir val_fixed_5k \
+  --x_size 8 --y_size 8 --n_pursuers 2 --n_evaders 1 \
+  --max_cycles 100 --freeze_evaders --n_catch 2 \
+  --env_seeds 101,102,103,104,105,106,107,108,109,110 \
+  --episodes 600 \
+  --every_k_steps 2 --dedup \
+  --balance_actions --per_action_cap 1200 \
+  --deterministic --store_logits \
+  --rllib_checkpoint /home/danielmasamba/projects/pursuit/mappo_results/PPO_2025-09-02_22-27-57/PPO_pursuit_env_fc9d2_00000_0_2025-09-02_22-27-58/checkpoint_000079 \
+  --policy_id default_policy \
+  --target_count 5000 --progress_every 100
+
+python collect_mappo_distill_data_val.py --out_dir val_fixed_5k --x_size 8 --y_size 8 --n_pursuers 2 --n_evaders 1 --max_cycles 100 --freeze_evaders --n_catch 2 --env_seeds 101,102,103,104,105,106,107,108,109,110 --episodes 600 --every_k_steps 2 --dedup --balance_actions --per_action_cap 1200 --deterministic --store_logits --rllib_checkpoint /home/danielmasamba/projects/pursuit/mappo_results/PPO_2025-09-02_22-27-57/PPO_pursuit_env_fc9d2_00000_0_2025-09-02_22-27-58/checkpoint_000079 --policy_id default_policy --target_count 5000 --progress_every 100
+
+python collect_mappo_distill_data_val.py --out_dir val_fixed_5k --x_size 8 --y_size 8 --n_pursuers 2 --n_evaders 1 --max_cycles 100 --freeze_evaders --n_catch 2 --env_seeds 101,102,103,104,105,106,107,108,109,110 --episodes 2800 --every_k_steps 2 --dedup --balance_actions --per_action_cap 1200 --deterministic --store_logits --rllib_checkpoint /home/danielmasamba/projects/pursuit/mappo_results/PPO_2025-09-02_22-27-57/PPO_pursuit_env_fc9d2_00000_0_2025-09-02_22-27-58/checkpoint_000079 --policy_id default_policy --target_count 5000 --progress_every 100
+
+2025-10-28 15:48:33,329 WARNING tune.py:1056 -- Experiment has been interrupted, but the most recent state was saved.
+Resume experiment with: tune.run(..., resume=True)
+  
+
+python train_pursuit_mappo_rgb.py --num-agents 2 --num-evaders 1 --num-workers 5 --train-batch-size-per-learner 1024 --num-iters 10000 --minibatch-size 64 --num-epochs 10 --use-wandb
+
+python train_pursuit_mappo_obs_images.py --num-agents 2 --num-evaders 1 --num-workers 5 --train-batch-size-per-learner 1024 --num-iters 10000 --minibatch-size 64 --num-epochs 10 --cell-scale 16 --use-wandb
+
+python collect_mappo_distill_data_with_values.py --checkpoint /home/danielmasamba/projects/pursuit/mappo_results/PPO_2025-09-02_22-27-57/PPO_pursuit_env_fc9d2_00000_0_2025-09-02_22-27-58/checkpoint_000079 --out_dir distill_data_with_values --episodes 500 --n-pursuers 2 --n-evaders 1
+
+
+python collect_mappo_distill_data_with_values.py --checkpoint /home/danielmasamba/projects/pursuit/mappo_results/PPO_2025-09-02_22-27-57/PPO_pursuit_env_fc9d2_00000_0_2025-09-02_22-27-58/checkpoint_000079 --out_dir distill_data_with_values/data_240_2 -
+-episodes 240 --n-pursuers 2 --n-evaders 1 --advantage-type gae --gae-lambda 0.95 --normalize-advanta
+ges --advantage-clip 3.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

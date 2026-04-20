@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.python-version
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Tooling and editor state
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.vscode/
+.claude/
+.codex
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and local env files
+*.log
+.env
+.env.*
+
+# Ray / W&B / checkpoints
+ray_results/
+wandb/
+artifacts/
+checkpoint_*/
+**/wandb/
+**/artifacts/
+events.out.tfevents*
+vendor/PettingZoo/.git/
+
+# Model artifacts
+*.ckpt
+*.pth
+*.pt
+*.pkl
+
+# Generated experiment outputs
+results/
+shared_results/
+ippo_results/
+mappo_results/
+mappo_rgb_results/
+ippo_obs_image_results/
+mappo_obs_image_results/
+ippo_obs_images_eval_results/
+distill_data/
+distill_data_with_values/
+test_val_fixed/
+testing_fix_data/
+val_fixed_5k/

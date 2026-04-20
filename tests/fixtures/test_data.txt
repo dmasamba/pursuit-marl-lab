@@ -1,0 +1,530 @@
+data_240
+[Done] Collected 240 episodes, 5652 agent steps
+Output: distill_data_with_values/data_240
+Advantage type: gae (λ=0.95)
+Normalize advantages: True
+Advantage clip: ±3.0
+Avg advantage: -0.0000
+Positive/Negative ratio: 46.3% / 53.7%
+Mean episode return (per agent): 3.85 ± 0.57
+
+data_240_1
+[Done] Collected 240 episodes, 5600 agent steps
+  Output: distill_data_with_values/data_240_1
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0000
+  Positive/Negative ratio: 46.2% / 53.8%
+  Mean episode return (per agent): 3.86 ± 0.56
+
+data_240_2
+[Done] Collected 240 episodes, 5524 agent steps
+Output: distill_data_with_values/data_240_2
+Advantage type: gae (λ=0.95)
+Normalize advantages: True
+Advantage clip: ±3.0
+Avg advantage: -0.0000
+Positive/Negative ratio: 46.5% / 53.5%
+Mean episode return (per agent): 3.87 ± 0.51
+
+data_240_3
+[Done] Collected 240 episodes, 5510 agent steps
+  Output: distill_data_with_values/data_240_3
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0000
+  Positive/Negative ratio: 46.5% / 53.5%
+  Mean episode return (per agent): 3.88 ± 0.51
+
+  data_240_4
+  [Done] Collected 240 episodes, 5552 agent steps
+  Output: distill_data_with_values/data_240_4
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: False
+  Avg advantage: 2.8975
+  Positive/Negative ratio: 97.0% / 3.0%
+  Mean episode return (per agent): 3.87 ± 0.64
+
+  data_240_5
+  [Done] Collected 240 episodes, 5576 agent steps
+  Output: distill_data_with_values/data_240_5
+  Advantage type: mc
+  Normalize advantages: False
+  Avg advantage: 3.9404
+  Positive/Negative ratio: 100.0% / 0.0%
+  Mean episode return (per agent): 3.86 ± 0.61
+
+  td_240_data
+  [Done] Collected 240 episodes, 5794 agent steps
+  Output: distill_data_with_values/td_240_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0231
+  Positive/Negative ratio: 48.2% / 51.8%
+  Mean episode return (per agent): 3.82 ± 0.65
+
+  td_240_2_data
+  [Done] Collected 240 episodes, 5864 agent steps
+  Output: distill_data_with_values/td_240_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0316
+  Positive/Negative ratio: 47.3% / 52.7%
+  Mean episode return (per agent): 3.80 ± 0.61
+
+  td_240_3_data
+  [Done] Collected 240 episodes, 5632 agent steps
+  Output: distill_data_with_values/td_240_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0301
+  Positive/Negative ratio: 48.7% / 51.3%
+  Mean episode return (per agent): 3.85 ± 0.61
+
+  td_240_4_data
+  [Done] Collected 240 episodes, 5694 agent steps
+  Output: distill_data_with_values/td_240_4_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0245
+  Positive/Negative ratio: 48.5% / 51.5%
+  Mean episode return (per agent): 3.84 ± 0.59
+
+  td_240_5_data
+  [Done] Collected 240 episodes, 5540 agent steps
+  Output: distill_data_with_values/td_240_5_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0303
+  Positive/Negative ratio: 47.9% / 52.1%
+  Mean episode return (per agent): 3.87 ± 0.57
+
+  td_200_data
+  [Done] Collected 200 episodes, 4688 agent steps
+  Output: distill_data_with_values/td_200_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0372
+  Positive/Negative ratio: 49.3% / 50.7%
+  Mean episode return (per agent): 3.85 ± 0.58
+
+  td_220_data
+  [Done] Collected 220 episodes, 5624 agent steps
+  Output: distill_data_with_values/td_220_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0262
+  Positive/Negative ratio: 47.4% / 52.6%
+  Mean episode return (per agent): 3.75 ± 0.62
+
+  td_220_2_data
+  [Done] Collected 220 episodes, 5232 agent steps
+  Output: distill_data_with_values/td_220_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0298
+  Positive/Negative ratio: 48.5% / 51.5%
+  Mean episode return (per agent): 3.83 ± 0.62
+
+  td_220_3_data
+  [Done] Collected 220 episodes, 5138 agent steps
+  Output: distill_data_with_values/td_220_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0226
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.86 ± 0.61
+
+  td_230_data ***
+  [Done] Collected 230 episodes, 5272 agent steps
+  Output: distill_data_with_values/td_230_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0364
+  Positive/Negative ratio: 49.4% / 50.6%
+  Mean episode return (per agent): 3.88 ± 0.59
+
+  td_230_2_data
+  [Done] Collected 230 episodes, 5388 agent steps
+  Output: distill_data_with_values/td_230_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0321
+  Positive/Negative ratio: 48.1% / 51.9%
+  Mean episode return (per agent): 3.85 ± 0.57
+
+  td_230_3_data
+  [Done] Collected 230 episodes, 5744 agent steps
+  Output: distill_data_with_values/td_230_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0296
+  Positive/Negative ratio: 48.9% / 51.1%
+  Mean episode return (per agent): 3.78 ± 0.58
+
+  td_1150_data
+  [Done] Collected 1150 episodes, 27368 agent steps
+  Output: distill_data_with_values/td_1150_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0307
+  Positive/Negative ratio: 49.0% / 51.0%
+  Mean episode return (per agent): 3.83 ± 0.61
+
+  td_1150_2_data
+  [Done] Collected 1150 episodes, 26940 agent steps
+  Output: distill_data_with_values/td_1150_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0341
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.85 ± 0.54
+
+  td_1150_3_data
+  [Done] Collected 1150 episodes, 27414 agent steps
+  Output: distill_data_with_values/td_1150_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0280
+  Positive/Negative ratio: 48.2% / 51.8%
+  Mean episode return (per agent): 3.83 ± 0.59
+
+  td_1150_4_data
+  [Done] Collected 1150 episodes, 27112 agent steps
+  Output: distill_data_with_values/td_1150_4_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0349
+  Positive/Negative ratio: 48.9% / 51.1%
+  Mean episode return (per agent): 3.84 ± 0.59
+
+  td_1150_5_data
+  [Done] Collected 1150 episodes, 26668 agent steps
+  Output: distill_data_with_values/td_1150_5_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0329
+  Positive/Negative ratio: 48.8% / 51.2%
+  Mean episode return (per agent): 3.86 ± 0.56
+
+  td_1150_6_data
+  [Done] Collected 1150 episodes, 27542 agent steps
+  Output: distill_data_with_values/td_1150_6_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0303
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.83 ± 0.59
+
+  td_1150_7_data
+  [Done] Collected 1150 episodes, 27288 agent steps
+  Output: distill_data_with_values/td_1150_7_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0282
+  Positive/Negative ratio: 48.1% / 51.9%
+  Mean episode return (per agent): 3.84 ± 0.59
+
+  td_1130_data
+  [Done] Collected 1130 episodes, 26966 agent steps
+  Output: distill_data_with_values/td_1130_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0322
+  Positive/Negative ratio: 48.2% / 51.8%
+  Mean episode return (per agent): 3.83 ± 0.58
+
+  td_1130_2_data
+  [Done] Collected 1130 episodes, 26728 agent steps
+  Output: distill_data_with_values/td_1130_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0294
+  Positive/Negative ratio: 48.5% / 51.5%
+  Mean episode return (per agent): 3.84 ± 0.57
+
+  td_1130_3_data
+  [Done] Collected 1130 episodes, 26552 agent steps
+  Output: distill_data_with_values/td_1130_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0308
+  Positive/Negative ratio: 48.5% / 51.5%
+  Mean episode return (per agent): 3.85 ± 0.58
+
+  td_1130_4_data
+  [Done] Collected 1130 episodes, 27318 agent steps
+  Output: distill_data_with_values/td_1130_4_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0299
+  Positive/Negative ratio: 48.8% / 51.2%
+  Mean episode return (per agent): 3.82 ± 0.56
+
+
+  td_1130_5_data ***
+  [Done] Collected 1130 episodes, 25840 agent steps
+  Output: distill_data_with_values/td_1130_5_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0361
+  Positive/Negative ratio: 49.0% / 51.0%
+  Mean episode return (per agent): 3.88 ± 0.56
+
+  gae_230_data (is 240 episodes) ******
+  [Done] Collected 240 episodes, 5546 agent steps
+  Output: distill_data_with_values/gae_230_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0002
+  Positive/Negative ratio: 44.7% / 55.3%
+  Mean episode return (per agent): 3.87 ± 0.58
+
+  gae_240_2_data
+  [Done] Collected 240 episodes, 5828 agent steps
+  Output: distill_data_with_values/gae_240_2_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0004
+  Positive/Negative ratio: 45.2% / 54.8%
+  Mean episode return (per agent): 3.81 ± 0.61
+
+  gae_240_3_data
+  [Done] Collected 240 episodes, 5606 agent steps
+  Output: distill_data_with_values/gae_240_3_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0006
+  Positive/Negative ratio: 45.3% / 54.7%
+  Mean episode return (per agent): 3.86 ± 0.58
+
+  gae_240_4_data
+  [Done] Collected 240 episodes, 5928 agent steps
+  Output: distill_data_with_values/gae_240_4_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0008
+  Positive/Negative ratio: 45.3% / 54.7%
+  Mean episode return (per agent): 3.79 ± 0.67
+
+  gae_240_5_data
+  [Done] Collected 240 episodes, 5954 agent steps
+  Output: distill_data_with_values/gae_240_5_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0012
+  Positive/Negative ratio: 44.1% / 55.9%
+  Mean episode return (per agent): 3.78 ± 0.59
+
+  gae_230_2_data
+  [Done] Collected 230 episodes, 5564 agent steps
+  Output: distill_data_with_values/gae_230_2_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0005
+  Positive/Negative ratio: 44.7% / 55.3%
+  Mean episode return (per agent): 3.81 ± 0.61
+
+  gae_230_3_data
+  [Done] Collected 230 episodes, 5670 agent steps
+  Output: distill_data_with_values/gae_230_3_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0005
+  Positive/Negative ratio: 43.9% / 56.1%
+  Mean episode return (per agent): 3.79 ± 0.62
+
+  gae_230_4_data
+  [Done] Collected 230 episodes, 5406 agent steps
+  Output: distill_data_with_values/gae_230_4_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0004
+  Positive/Negative ratio: 45.2% / 54.8%
+  Mean episode return (per agent): 3.85 ± 0.71
+
+  gae_230_5_data
+  [Done] Collected 230 episodes, 5576 agent steps
+  Output: distill_data_with_values/gae_230_5_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0009
+  Positive/Negative ratio: 45.8% / 54.2%
+  Mean episode return (per agent): 3.81 ± 0.65
+
+  gae_4800_data ***
+  [Done] Collected 4800 episodes, 112462 agent steps
+  Output: distill_data_with_values/td_4800_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0007
+  Positive/Negative ratio: 44.7% / 55.3%
+  Mean episode return (per agent): 3.85 ± 0.58
+
+  gae_4800_2_data
+  [Done] Collected 4800 episodes, 113764 agent steps
+  Output: distill_data_with_values/td_4800_2_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0006
+  Positive/Negative ratio: 44.8% / 55.2%
+  Mean episode return (per agent): 3.84 ± 0.60
+
+  gae_4500_data
+  [Done] Collected 4500 episodes, 107064 agent steps
+  Output: distill_data_with_values/td_4500_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0006
+  Positive/Negative ratio: 44.6% / 55.4%
+  Mean episode return (per agent): 3.83 ± 0.57
+
+  gae_4700_data
+  [Done] Collected 4700 episodes, 111304 agent steps
+  Output: distill_data_with_values/td_4700_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0007
+  Positive/Negative ratio: 44.3% / 55.7%
+  Mean episode return (per agent): 3.84 ± 0.58
+
+  gae_4700_2_data
+  [Done] Collected 4700 episodes, 111864 agent steps
+  Output: distill_data_with_values/td_4700_2_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0008
+  Positive/Negative ratio: 44.7% / 55.3%
+  Mean episode return (per agent): 3.83 ± 0.59
+
+  gae_4700_3_data
+  [Done] Collected 4700 episodes, 113256 agent steps
+  Output: distill_data_with_values/td_4700_3_data
+  Advantage type: gae (λ=0.95)
+  Normalize advantages: True
+  Advantage clip: ±3.0
+  Avg advantage: -0.0007
+  Positive/Negative ratio: 44.5% / 55.5%
+  Mean episode return (per agent): 3.82 ± 0.61
+
+  td_4800_data
+  [Done] Collected 4800 episodes, 114928 agent steps
+  Output: distill_data_with_values/td_4800_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0306
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.83 ± 0.58
+
+  td_4800_2_data
+  [Done] Collected 4800 episodes, 113340 agent steps
+  Output: distill_data_with_values/td_4800_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0319
+  Positive/Negative ratio: 48.6% / 51.4%
+  Mean episode return (per agent): 3.84 ± 0.58
+
+  td_4800_3_data
+  [Done] Collected 4800 episodes, 114642 agent steps
+  Output: distill_data_with_values/td_4800_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0309
+  Positive/Negative ratio: 48.5% / 51.5%
+  Mean episode return (per agent): 3.83 ± 0.59
+
+  td_4700_data
+  [Done] Collected 4700 episodes, 112382 agent steps
+  Output: distill_data_with_values/td_4700_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0279
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.83 ± 0.60
+
+  td_4700_2_data
+  [Done] Collected 4700 episodes, 112534 agent steps
+  Output: distill_data_with_values/td_4700_2_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0308
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.83 ± 0.59
+
+  td_4700_3_data ***
+  [Done] Collected 4700 episodes, 110286 agent steps
+  Output: distill_data_with_values/td_4700_3_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0314
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.85 ± 0.58
+
+  td_4700_4_data
+  [Done] Collected 4700 episodes, 112538 agent steps
+  Output: distill_data_with_values/td_4700_4_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0309
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.83 ± 0.59
+
+  td_4700_5_data
+  [Done] Collected 4700 episodes, 112274 agent steps
+  Output: distill_data_with_values/td_4700_5_data
+  Advantage type: td
+  Normalize advantages: False
+  Avg advantage: 0.0299
+  Positive/Negative ratio: 48.4% / 51.6%
+  Mean episode return (per agent): 3.83 ± 0.58
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

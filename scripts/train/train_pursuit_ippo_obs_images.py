@@ -130,7 +130,7 @@ def parse_args():
     parser.add_argument(
         "--storage-path",
         type=str,
-        default="artifacts/ippo_obs_image_results",
+        default="/home/danielmasamba/projects/pursuit/ippo_obs_image_results",
         help="Tune storage path for checkpoints and logs.",
     )
     parser.add_argument(
@@ -265,7 +265,7 @@ def main():
             )
         )
 
-    storage_path = os.path.expanduser(args.storage_path)
+    storage_path = os.path.abspath(os.path.expanduser(args.storage_path))
     analysis = tune.run(
         args.algo,
         config=config,

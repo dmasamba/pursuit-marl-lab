@@ -1,10 +1,16 @@
 #!/usr/bin/env python
 """
-Train MAPPO on PettingZoo Pursuit using observation-built RGB images.
+Train MAPPO on PettingZoo Pursuit with dense checkpointing aligned to target
+environment-step milestones.
 
-Each agent receives the same stylized grid image that we feed to the VLM
-evaluation pipeline (see infer_with_metrics.py), ensuring apples-to-apples
-comparisons between policy learning and vision-language inference.
+Mirrors train_pursuit_mappo_obs_images.py but saves an extra checkpoint the
+first time lifetime env-steps crosses each of:
+
+    0 (cold-start), 1k, 5k, 10k, 30k, 100k, 300k, 1M, 3M, 10M
+
+These are the x-axis anchors used for the VLM vs PPO head-to-head comparison
+(see vlm_vs_ppo_comparison_discussion.md). Each saved checkpoint can later be
+evaluated on the shift suite to produce a success-rate-vs-env-samples curve.
 """
 
 import argparse
@@ -20,9 +26,10 @@ import torch.nn.functional as F
 from gymnasium import spaces
 from PIL import Image, ImageDraw, ImageFont
 
+import signal
+
 import ray
 from ray import tune
-from ray.tune import CLIReporter, CheckpointConfig
 
 from pettingzoo.sisl import pursuit_v4
 from pettingzoo.utils.wrappers import BaseParallelWrapper
@@ -35,6 +42,18 @@ from ray.rllib.algorithms.ppo.torch.default_ppo_torch_rl_module import (
     DefaultPPOTorchRLModule,
 )
 from ray.rllib.algorithms.ppo.ppo_catalog import PPOCatalog
+
+DEFAULT_CKPT_TIMESTEPS = (
+    1_000,
+    5_000,
+    10_000,
+    30_000,
+    100_000,
+    300_000,
+    1_000_000,
+    3_000_000,
+    10_000_000,
+)
 
 
 class ObservationImageRenderer:
@@ -280,129 +299,107 @@ class MAPPOPPOTorchRLModule(DefaultPPOTorchRLModule):
         return v.squeeze(-1)
 
 
+def _flatten_metrics(d: dict, prefix: str = "") -> dict:
+    """Recursively extract only numeric/string leaf values for wandb.log."""
+    out = {}
+    for k, v in d.items():
+        key = f"{prefix}/{k}" if prefix else k
+        if isinstance(v, dict):
+            out.update(_flatten_metrics(v, key))
+        elif isinstance(v, (int, float, bool, str)):
+            out[key] = v
+    return out
+
+
+def _ts_from_result(result: dict) -> int:
+    for key in ("num_env_steps_sampled_lifetime", "timesteps_total"):
+        val = result.get(key)
+        if val:
+            return int(val)
+    env_runners = result.get("env_runners", {}) or {}
+    val = env_runners.get("num_env_steps_sampled_lifetime")
+    return int(val) if val else 0
+
+
+def _save_checkpoint(algo, ckpt_dir: str, ts: int) -> None:
+    os.makedirs(ckpt_dir, exist_ok=True)
+    save_fn = getattr(algo, "save_to_path", None) or algo.save
+    save_fn(ckpt_dir)
+    print(f"[DenseCkpt] Saved checkpoint at env_steps={ts} -> {ckpt_dir}", flush=True)
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Train PettingZoo Pursuit MAPPO on observation-built images"
+        description=(
+            "Train PettingZoo Pursuit MAPPO on observation-built images with "
+            "dense checkpointing at fixed env-step milestones."
+        )
     )
 
     # Environment
-    parser.add_argument(
-        "--num-agents",
-        type=int,
-        default=4,
-        help="Number of pursuer agents (shared policy).",
-    )
-    parser.add_argument(
-        "--num-evaders",
-        type=int,
-        default=2,
-        help="Number of evaders in the grid.",
-    )
+    parser.add_argument("--num-agents", type=int, default=4)
+    parser.add_argument("--num-evaders", type=int, default=2)
     parser.add_argument(
         "--cell-scale",
         type=int,
         default=24,
-        help="Pixel size for each grid cell when rendering observations (32 matches VLM).",
+        help="Pixel size for each grid cell when rendering observations.",
     )
-    parser.add_argument(
-        "--disable-count-overlay",
-        action="store_true",
-        help="Disable numeric overlays for pursuer/evader counts.",
-    )
-    parser.add_argument(
-        "--no-normalize",
-        action="store_true",
-        help="Emit uint8 RGB observations instead of float32 [0,1].",
-    )
+    parser.add_argument("--disable-count-overlay", action="store_true")
+    parser.add_argument("--no-normalize", action="store_true")
 
     # RLlib / PPO
+    parser.add_argument("--algo", type=str, default="PPO")
     parser.add_argument(
-        "--algo",
-        type=str,
-        default="PPO",
-        help="RLlib algorithm to launch (default: PPO).",
+        "--framework", type=str, default="torch", choices=["torch", "tf"]
     )
-    parser.add_argument(
-        "--framework",
-        type=str,
-        default="torch",
-        choices=["torch", "tf"],
-        help="Deep-learning framework for RLlib.",
-    )
-    parser.add_argument(
-        "--num-workers",
-        type=int,
-        default=2,
-        help="Number of remote rollout workers.",
-    )
-    parser.add_argument(
-        "--num-envs-per-worker",
-        type=int,
-        default=8,
-        help="Parallel envs per rollout worker.",
-    )
-    parser.add_argument(
-        "--train-batch-size-per-learner",
-        type=int,
-        default=512,
-        help="Training batch size per learner.",
-    )
-    parser.add_argument(
-        "--minibatch-size",
-        type=int,
-        default=64,
-        help="Minibatch size per SGD epoch.",
-    )
-    parser.add_argument(
-        "--num-epochs",
-        type=int,
-        default=10,
-        help="Number of SGD epochs per batch.",
-    )
+    parser.add_argument("--num-workers", type=int, default=2)
+    parser.add_argument("--num-envs-per-worker", type=int, default=8)
+    parser.add_argument("--train-batch-size-per-learner", type=int, default=512)
+    parser.add_argument("--minibatch-size", type=int, default=64)
+    parser.add_argument("--num-epochs", type=int, default=10)
 
-    # Stopping criteria
+    # Stopping criteria — default to stopping at the final dense-ckpt target.
     parser.add_argument(
         "--num-iters",
         type=int,
-        default=1000,
-        help="Number of training iterations.",
+        default=None,
+        help="Optional training-iteration cap (overrides --stop-timesteps if set).",
     )
     parser.add_argument(
         "--stop-timesteps",
         type=int,
-        default=None,
-        help="Optional total timesteps threshold.",
+        default=DEFAULT_CKPT_TIMESTEPS[-1],
+        help="Total lifetime env-steps to train for (default: 10M).",
+    )
+
+    # Dense checkpoint schedule override (comma-separated, e.g. 1000,5000,...).
+    parser.add_argument(
+        "--ckpt-timesteps",
+        type=str,
+        default=",".join(str(t) for t in DEFAULT_CKPT_TIMESTEPS),
+        help=(
+            "Comma-separated env-step milestones at which to save a checkpoint. "
+            "A cold-start checkpoint at 0 is always written in addition to these."
+        ),
     )
 
     # Logging
     parser.add_argument(
         "--storage-path",
         type=str,
-        default="/home/danielmasamba/projects/pursuit/mappo_obs_image_results",
-        help="Tune storage path for checkpoints and logs.",
+        default="/home/danielmasamba/projects/pursuit/mappo_obs_image_results_dense_ckpt",
     )
-    parser.add_argument(
-        "--use-wandb",
-        action="store_true",
-        help="Enable logging to Weights & Biases.",
-    )
-    parser.add_argument(
-        "--wandb-project",
-        type=str,
-        default="RLlib-Pursuit-ObsImages",
-        help="WandB project name.",
-    )
-    parser.add_argument(
-        "--wandb-key",
-        type=str,
-        default=None,
-        help="WandB API key.",
-    )
+    parser.add_argument("--use-wandb", action="store_true")
+    parser.add_argument("--wandb-project", type=str, default="RLlib-Pursuit-ObsImages")
+    parser.add_argument("--wandb-key", type=str, default=None)
     parser.add_argument(
         "--wandb-run-name",
         type=str,
-        default=f"Pursuit-MAPPO-ObsImages-{datetime.now().strftime('%Y%m%d-%H%M%S')}",
-        help="Optional WandB run name.",
+        default=(
+            f"Pursuit-MAPPO-ObsImages-DenseCkpt-"
+            f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        ),
     )
 
     return parser.parse_args()
@@ -419,9 +416,30 @@ def build_conv_filters(cell_scale: int):
     return filters
 
 
+def _parse_ckpt_timesteps(raw: str) -> Tuple[int, ...]:
+    parsed = []
+    for tok in raw.split(","):
+        tok = tok.strip()
+        if not tok:
+            continue
+        val = int(tok)
+        if val <= 0:
+            raise ValueError(
+                f"ckpt-timesteps must be positive integers; got {val}. "
+                "(The cold-start checkpoint at 0 is always written automatically.)"
+            )
+        parsed.append(val)
+    parsed = tuple(sorted(set(parsed)))
+    if not parsed:
+        raise ValueError("ckpt-timesteps must contain at least one positive integer.")
+    return parsed
+
+
 def main():
     args = parse_args()
     ray.init(ignore_reinit_error=True)
+
+    ckpt_targets = _parse_ckpt_timesteps(args.ckpt_timesteps)
 
     def pursuit_obs_image_env_creator(env_config):
         env = pursuit_v4.parallel_env(
@@ -486,67 +504,84 @@ def main():
         .rl_module(rl_module_spec=rl_mod_spec)
         .resources(num_gpus=1)
     )
-    config = ppo_config.to_dict()
-
-    if args.num_iters:
-        stop_criteria = {"training_iteration": args.num_iters}
-    elif args.stop_timesteps:
-        stop_criteria = {"timesteps_total": args.stop_timesteps}
-    else:
-        stop_criteria = {}
-
-    reporter = CLIReporter(
-        parameter_columns=[
-            "training_iteration",
-            "episode_return_mean",
-            "episodes_total",
-            "timesteps_total",
-        ],
-        metric_columns=["episode_return_mean", "time_this_iter_s"],
-    )
-
-    callbacks = []
-    if args.use_wandb:
-        os.environ["WANDB_API_KEY"] = args.wandb_key or os.environ.get(
-            "WANDB_API_KEY", ""
-        )
-        from ray.air.integrations.wandb import WandbLoggerCallback
-
-        callbacks.append(
-            WandbLoggerCallback(
-                project=args.wandb_project,
-                name=args.wandb_run_name,
-                log_config=True,
-            )
-        )
 
     storage_path = os.path.abspath(os.path.expanduser(args.storage_path))
-    analysis = tune.run(
-        args.algo,
-        config=config,
-        stop=stop_criteria,
-        storage_path=storage_path,
-        progress_reporter=reporter,
-        callbacks=callbacks,
-        checkpoint_config=CheckpointConfig(
-            checkpoint_frequency=100,
-            checkpoint_at_end=True,
-            num_to_keep=10,
-        ),
+    run_dir = os.path.join(
+        storage_path, f"run_{datetime.now().strftime('%Y%m%d-%H%M%S')}"
     )
+    os.makedirs(run_dir, exist_ok=True)
+    print(f"[DenseCkpt] Run directory: {run_dir}", flush=True)
+    print(f"[DenseCkpt] Milestone targets (env steps): {ckpt_targets}", flush=True)
 
-    try:
-        best = analysis.get_best_trial(metric="episode_return_mean", mode="max")
-        print(
-            "Best trial:",
-            best.trial_id,
-            "checkpoint:",
-            analysis.get_best_checkpoint(best),
+    wandb_run = None
+    if args.use_wandb:
+        import wandb
+        os.environ["WANDB_API_KEY"] = args.wandb_key or os.environ.get("WANDB_API_KEY", "")
+        wandb_run = wandb.init(
+            project=args.wandb_project,
+            name=args.wandb_run_name,
+            config=ppo_config.to_dict(),
         )
-    except Exception:
-        pass
 
-    ray.shutdown()
+    algo = ppo_config.build()
+
+    # Cold-start checkpoint (0 env steps, untrained weights).
+    _save_checkpoint(algo, os.path.join(run_dir, "ckpt_ts_0000000000"), ts=0)
+
+    saved_targets = set()
+    stop_requested = False
+
+    def _handle_sigint(sig, frame):
+        nonlocal stop_requested
+        print("\n[DenseCkpt] Interrupt received — saving final checkpoint and stopping.", flush=True)
+        stop_requested = True
+
+    signal.signal(signal.SIGINT, _handle_sigint)
+
+    iteration = 0
+    try:
+        while True:
+            result = algo.train()
+            iteration += 1
+            ts = _ts_from_result(result)
+
+            ep_return = (
+                result.get("env_runners", {}).get("episode_return_mean")
+                or result.get("episode_return_mean")
+                or float("nan")
+            )
+            print(
+                f"[iter {iteration:6d}] env_steps={ts:>10,}  ep_return_mean={ep_return:.3f}",
+                flush=True,
+            )
+
+            if wandb_run is not None:
+                wandb_run.log({"env_steps": ts, "iteration": iteration, **_flatten_metrics(result)})
+
+            # Save at milestone targets.
+            for target in ckpt_targets:
+                if target not in saved_targets and ts >= target:
+                    _save_checkpoint(
+                        algo,
+                        os.path.join(run_dir, f"ckpt_ts_{target:010d}"),
+                        ts=ts,
+                    )
+                    saved_targets.add(target)
+
+            if stop_requested:
+                break
+            if args.num_iters and iteration >= args.num_iters:
+                break
+            if args.stop_timesteps and ts >= args.stop_timesteps:
+                break
+
+    finally:
+        final_dir = os.path.join(run_dir, "ckpt_ts_final")
+        _save_checkpoint(algo, final_dir, ts=_ts_from_result(result if iteration else {}))
+        algo.stop()
+        if wandb_run is not None:
+            wandb_run.finish()
+        ray.shutdown()
 
 
 if __name__ == "__main__":

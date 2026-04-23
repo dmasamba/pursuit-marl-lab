@@ -51,6 +51,7 @@ mappo_results/
 mappo_rgb_results/
 ippo_obs_image_results/
 mappo_obs_image_results/
+mappo_obs_image_results_dense_ckpt/
 ippo_obs_images_eval_results/
 distill_data/
 distill_data_with_values/

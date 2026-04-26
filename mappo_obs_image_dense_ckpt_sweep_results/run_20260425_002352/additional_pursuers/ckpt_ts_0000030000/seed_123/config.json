@@ -1,0 +1,19 @@
+{
+  "scenario": "additional_pursuers",
+  "checkpoint_path": "/home/danielmasamba/projects/pursuit/mappo_obs_image_results_dense_ckpt/run_20260423-023217/ckpt_ts_0000030000",
+  "seed": 123,
+  "num_eval_episodes": 100,
+  "cell_scale": 16,
+  "normalize": true,
+  "draw_counts": true,
+  "env_steps": 30000,
+  "env_params": {
+    "n_pursuers": 3,
+    "n_evaders": 1,
+    "x_size": 8,
+    "y_size": 8,
+    "n_catch": 2,
+    "max_cycles": 100,
+    "freeze_evaders": true
+  }
+}

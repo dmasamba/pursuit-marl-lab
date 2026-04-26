@@ -1,0 +1,11 @@
+{
+  "success_rate_mean": 1.0,
+  "success_rate_std": 0.0,
+  "num_successes": 100,
+  "num_episodes": 100,
+  "avg_steps_success_mean": 12.17,
+  "avg_steps_success_std": 4.816752017698233,
+  "num_success_episodes": 100,
+  "avg_episode_reward_mean": 7.6206499999999995,
+  "avg_episode_reward_std": 0.9634748712343257
+}

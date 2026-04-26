@@ -58,6 +58,47 @@ head-to-head VLM vs MAPPO/IPPO learning-curve comparison targeting the ICML
 
 Results from the dense-checkpoint run land in `mappo_obs_image_results_dense_ckpt/`.
 
+## Dense-Checkpoint Sweep Evaluation
+
+`scripts/eval/mappo_obs_images_dense_ckpt_sweep/` sweeps all checkpoints from a
+dense-checkpoint training run across every generalisation scenario and multiple
+seeds, producing the full PPO learning curve used in the VLM vs PPO comparison.
+
+**Scripts:**
+- `run_sweep.py` — orchestrates the full sweep; spawns `eval_one.py` as a
+  subprocess for each (scenario, checkpoint, seed) cell so Ray state is reset
+  between runs.
+- `eval_one.py` — evaluates a single cell and writes `config.json`,
+  `metrics.csv`, and `summary.json` to the output directory.
+
+**Scenarios covered:** `base`, `moving_evaders`, `larger_grid`,
+`additional_evaders`, `additional_pursuers`, `color_shift`,
+`semantic_color_swap`, `shape_shift`, `non_centered_ego`.
+
+**Checkpoints:** 0, 1k, 5k, 10k, 30k, 100k, 300k, 1M, 3M, 10M env steps
+(3 seeds each).
+
+Run a full sweep:
+
+```bash
+python -m scripts.eval.mappo_obs_images_dense_ckpt_sweep.run_sweep \
+    --ckpt-dir mappo_obs_image_results_dense_ckpt/run_<timestamp> \
+    --results-root mappo_obs_image_dense_ckpt_sweep_results
+```
+
+Run a single cell (useful for debugging or resuming):
+
+```bash
+python -m scripts.eval.mappo_obs_images_dense_ckpt_sweep.eval_one \
+    --ckpt-path mappo_obs_image_results_dense_ckpt/run_<timestamp>/ckpt_ts_0010000000 \
+    --scenario moving_evaders --seed 42 \
+    --output-dir /tmp/test_cell
+```
+
+Sweep results land in `mappo_obs_image_dense_ckpt_sweep_results/run_<timestamp>/`
+with a flat `all_results.csv` aggregating every cell and per-cell subdirectories
+mirroring `<scenario>/<ckpt_name>/seed_<s>/`.
+
 ## Notes
 
 - New generated outputs should go under `artifacts/`.

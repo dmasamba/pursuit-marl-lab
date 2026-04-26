@@ -1,0 +1,66 @@
+{
+  "ckpt_dir": "/home/danielmasamba/projects/pursuit/mappo_obs_image_results_dense_ckpt/run_20260423-023217",
+  "results_root": "/home/danielmasamba/projects/pursuit/mappo_obs_image_dense_ckpt_sweep_results",
+  "run_dir": "/home/danielmasamba/projects/pursuit/mappo_obs_image_dense_ckpt_sweep_results/run_20260425_000946",
+  "episodes": 100,
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "scenarios": [
+    "base",
+    "moving_evaders",
+    "larger_grid",
+    "additional_evaders",
+    "additional_pursuers",
+    "color_shift",
+    "semantic_color_swap",
+    "shape_shift",
+    "non_centered_ego"
+  ],
+  "checkpoints": [
+    {
+      "name": "ckpt_ts_0000000000",
+      "env_steps": 0
+    },
+    {
+      "name": "ckpt_ts_0000001000",
+      "env_steps": 1000
+    },
+    {
+      "name": "ckpt_ts_0000005000",
+      "env_steps": 5000
+    },
+    {
+      "name": "ckpt_ts_0000010000",
+      "env_steps": 10000
+    },
+    {
+      "name": "ckpt_ts_0000030000",
+      "env_steps": 30000
+    },
+    {
+      "name": "ckpt_ts_0000100000",
+      "env_steps": 100000
+    },
+    {
+      "name": "ckpt_ts_0000300000",
+      "env_steps": 300000
+    },
+    {
+      "name": "ckpt_ts_0001000000",
+      "env_steps": 1000000
+    },
+    {
+      "name": "ckpt_ts_0003000000",
+      "env_steps": 3000000
+    },
+    {
+      "name": "ckpt_ts_0010000000",
+      "env_steps": 10000000
+    }
+  ],
+  "include_final_ckpt": false,
+  "started_at": "20260425_000946"
+}
